@@ -1,538 +1,70 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!--
-AlWatan 24 – Blogger News Theme (RTL)
-Developed by Jules @ Anthropic
-
-Customization Instructions:
-- Colors & Fonts: Modify the <Variable> tags within the <b:skin> section.
-- Breaking News: Add a HTML/JavaScript widget to the "News Ticker" section (ID: news-ticker) and set its title to "عاجل". The script will automatically fetch posts with the label "عاجل".
--->
+<!-- AlWatan 24 - Guaranteed Safe Base Theme -->
 <!DOCTYPE html>
-<html b:css='false' b:defaultwidgetversion='2' b:layoutsVersion='3' b:responsive='true' b:templateVersion='1.3.0' expr:dir='data:blog.languageDirection' lang='ar'>
+<html b:css='true' b:defaultwidgetversion='2' b:layoutsVersion='3' b:responsive='true' expr:dir='data:blog.languageDirection' lang='ar'>
 <head>
-    <meta content='width=device-width, initial-scale=1, shrink-to-fit=no' name='viewport'/>
+    <meta content='width=device-width, initial-scale=1.0' name='viewport'/>
+    <title><data:blog.pageTitle/></title>
     <b:include data='blog' name='all-head-content'/>
-
-    <!-- Preconnect for performance -->
-    <link href='https://fonts.gstatic.com' rel='preconnect' crossorigin=''/>
-    <link href='https://fonts.googleapis.com' rel='preconnect'/>
-
-    <!-- Google Fonts -->
-    <link href='https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&amp;display=swap' rel='stylesheet'/>
-
-    <!-- SEO & Metadata -->
-    <b:include name='seo-meta-tags'/>
-
-    <!-- Blogger Theme Styles -->
     <b:skin><![CDATA[
-    /*<Variable name="font.family" description="Font Family" type="font" default="Tajawal, sans-serif"/>*/
-    /*<Variable name="color.primary" description="Primary Color" type="color" default="#0D47A1"/>*/
-    /*<Variable name="color.secondary" description="Secondary Color" type="color" default="#EF6C00"/>*/
-    /*<Variable name="color.bg.light" description="Background (Light)" type="color" default="#FFFFFF"/>*/
-    /*<Variable name="color.bg.dark" description="Background (Dark)" type="color" default="#0B0F19"/>*/
-    /*<Variable name="color.text.light" description="Text (Light)" type="color" default="#111111"/>*/
-    /*<Variable name="color.text.dark" description="Text (Dark)" type="color" default="#E8EAF6"/>*/
-    /*<Variable name="color.link" description="Link Color" type="color" default="#0D47A1"/>*/
-    /*<Variable name="color.header" description="Header Color" type="color" default="#FFFFFF"/>*/
-
-    :root {
-      --font-family: $(font.family);
-      --color-primary: $(color.primary);
-      --color-secondary: $(color.secondary);
-      --color-bg: $(color.bg.light);
-      --color-text: $(color.text.light);
-      --color-link: $(color.link);
-      --color-header: $(color.header);
-      --color-border: #e0e0e0;
-      --card-bg: #fff;
-      --card-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    }
-
-    html.theme-dark {
-      --color-bg: $(color.bg.dark);
-      --color-text: $(color.text.dark);
-      --color-link: #42a5f5;
-      --color-header: #111827;
-      --color-border: #2a2a2a;
-      --card-bg: #1f2937;
-      --card-shadow: 0 1px 3px rgba(0,0,0,0.4);
-    }
-
-    /* Base Styles */
-    body { font-family: var(--font-family); background-color: var(--color-bg); color: var(--color-text); margin: 0; line-height: 1.7; font-size: 16px; transition: background-color .3s, color .3s; }
-    a { color: var(--color-link); text-decoration: none; transition: color .2s; }
-    a:hover { color: var(--color-secondary); }
-    img { max-width: 100%; height: auto; }
-    .container { max-width: 1240px; margin: 0 auto; padding: 0 15px; }
-    .hidden { display: none; }
-
-    /* Header */
-    .top-bar { background-color: var(--header-bg); border-bottom: 1px solid var(--color-border); padding: 5px 0; font-size: 0.85em; display: flex; align-items: center; justify-content: space-between; }
-    .main-header { background-color: var(--header-bg); padding: 20px 0; border-bottom: 1px solid var(--color-border); }
-    .main-header .container { display: flex; justify-content: space-between; align-items: center; gap: 15px; }
-    .site-title a { font-size: 2.2em; font-weight: bold; color: var(--color-text); }
-    .site-title img { max-height: 60px; }
-
-    /* Navigation */
-    .main-nav { background-color: var(--color-primary); position: relative; }
-    .main-nav-list { list-style: none; margin: 0; padding: 0; display: flex; justify-content: center; }
-    .main-nav-list li a { display: block; padding: 15px 20px; color: #fff; font-weight: bold; }
-    .main-nav-list li a:hover { background-color: var(--color-secondary); }
-    .menu-toggle { display: none; background: none; border: none; color: white; font-size: 24px; padding: 10px; cursor: pointer; }
-
-    /* Ticker */
-    .news-ticker { display: flex; background-color: var(--card-bg); border: 1px solid var(--color-border); margin: 15px 0; overflow: hidden; }
-    .ticker-title { background-color: var(--color-secondary); color: #fff; padding: 10px 15px; font-weight: bold; white-space: nowrap; }
-    .ticker-content { overflow: hidden; position: relative; flex-grow: 1; }
-    .ticker-content ul { list-style: none; padding: 0; margin: 0; display: flex; position: absolute; white-space: nowrap; animation: ticker-scroll 60s linear infinite; }
-    .ticker-content ul:hover { animation-play-state: paused; }
-    .ticker-content ul li a { display: block; padding: 10px 15px; }
-    @keyframes ticker-scroll { 0% { transform: translateX(0%); } 100% { transform: translateX(-50%); } }
-
-    /* Main Layout */
-    .main-wrapper { display: grid; grid-template-columns: 1fr; gap: 25px; padding: 25px 0; }
-    @media (min-width: 992px) { .main-wrapper { grid-template-columns: 3fr 1fr; } }
-
-    /* Post Cards */
-    .post-card { background: var(--card-bg); border: 1px solid var(--color-border); margin-bottom: 20px; display: flex; flex-direction: column; border-radius: 8px; overflow:hidden; box-shadow: var(--card-shadow); transition: transform .2s; }
-    .post-card:hover { transform: translateY(-5px); }
-    .post-card-thumbnail { position: relative; }
-    .post-card-thumbnail img { width: 100%; display: block; aspect-ratio: 16/9; object-fit: cover; }
-    .post-card-category { position: absolute; top: 10px; right: 10px; background-color: var(--color-primary); color: #fff; padding: 5px 10px; font-size: 0.8em; border-radius: 3px; }
-    .post-card-content { padding: 20px; }
-    .post-card-title { font-size: 1.5em; line-height: 1.4; margin: 0 0 10px; }
-    .post-card-title a { color: var(--color-text); }
-    .post-card-snippet { font-size: 1em; margin-bottom: 15px; }
-    .post-meta { font-size: 0.85em; color: #757575; }
-    html.theme-dark .post-meta { color: #aaa; }
-
-    /* Featured Posts */
-    .featured-section { display: grid; gap: 20px; grid-template-columns: 1fr; }
-    @media (min-width: 768px) { .featured-section { grid-template-columns: repeat(2, 1fr); } }
-    @media (min-width: 992px) { .featured-section { grid-template-columns: 2fr 1fr; grid-template-rows: repeat(2, 1fr); } .featured-section .post-card:first-child { grid-column: 1 / 2; grid-row: 1 / 3; } }
-    .featured-section .post-card:first-child .post-card-title { font-size: 2em; }
-
-
-    /* Item Page */
-    .post-full { background: var(--card-bg); padding: 25px; border: 1px solid var(--color-border); border-radius: 8px; }
-    .post-full-title { font-size: 2.8em; margin: 0 0 15px; line-height: 1.3; font-weight: 700; }
-    .post-full-meta { margin-bottom: 20px; border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); padding: 10px 0; display: flex; flex-wrap: wrap; gap: 15px; font-size: .9em; }
-    .post-full-body { font-size: 1.1em; line-height: 1.8; }
-    .post-full-body h2, .post-full-body h3 { margin-top: 2em; margin-bottom: .8em; color: var(--color-primary); border-bottom: 2px solid var(--color-border); padding-bottom: 5px; }
-    .post-full-body blockquote { border-right: 4px solid var(--color-primary); padding-right: 20px; margin: 20px 0; font-style: italic; font-size: 1.1em; }
-    .post-full-body img { border-radius: 5px; }
-    .breadcrumb { margin-bottom: 20px; font-size: 0.9em; }
-    .related-posts h3 { border-bottom: 2px solid var(--color-primary); padding-bottom: 5px; margin: 25px 0; }
-    .related-posts .post-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; }
-
-    /* Sidebar */
-    .widget { background: var(--card-bg); border: 1px solid var(--color-border); padding: 20px; margin-bottom: 20px; border-radius: 5px; }
-    .widget-title { font-size: 1.3em; border-bottom: 2px solid var(--color-primary); padding-bottom: 8px; margin: -20px -20px 20px; padding: 15px 20px; background-color: var(--card-bg); }
-    .widget ul { list-style: none; padding: 0; margin: 0; }
-    .widget ul li a { display: block; padding: 8px 0; border-bottom: 1px dashed var(--color-border); }
-    .widget ul li:last-child a { border-bottom: none; }
-    .Label ul { display: flex; flex-wrap: wrap; gap: 8px; }
-    .Label ul li a { background-color: var(--color-primary); color: #fff; padding: 5px 10px; border-radius: 3px; font-size: .9em; }
-    .Label ul li a:hover { background-color: var(--color-secondary); }
-
-    /* Pagination */
-    .blog-pager { display: flex; justify-content: space-between; margin-top: 25px; padding-top: 25px; border-top: 1px solid var(--color-border); }
-    .blog-pager a { background: var(--color-primary); color: #fff; padding: 10px 20px; border-radius: 5px; font-weight: bold; }
-    .blog-pager a:hover { background: var(--color-secondary); }
-
-    /* Footer */
-    .main-footer { background-color: var(--header-bg); color: var(--color-text); border-top: 3px solid var(--color-primary); padding: 30px 0; margin-top: 20px; text-align: center; }
-
-    /* Dark Mode Toggle */
-    .theme-toggle { cursor: pointer; background: none; border: 1px solid var(--color-border); border-radius: 50%; width: 36px; height: 36px; display:flex; align-items:center; justify-content:center; }
-    .theme-toggle svg { fill: var(--color-text); transition: fill .3s; }
-
-    /* Responsive */
-    @media (max-width: 991px) {
-        .menu-toggle { display: block; }
-        .main-nav-list { display: none; flex-direction: column; position: absolute; background-color: var(--color-primary); width: 100%; top: 100%; z-index: 1000; }
-        .main-nav-list.active { display: flex; }
-    }
-    @media (max-width: 768px) {
-        .post-full-title { font-size: 2em; }
-        .main-header .container { flex-direction: column; }
-    }
+      body {
+        font-family: sans-serif;
+        background-color: #f0f0f0;
+        color: #333;
+        margin: 0;
+      }
+      .header-container, .footer-container {
+        background-color: #fff;
+        padding: 20px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+      }
+      .main-container {
+        max-width: 1100px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+      }
+       h1.title {
+        font-size: 2em;
+        color: #111;
+      }
     ]]></b:skin>
-
-    <b:include name='json-ld-schema'/>
 </head>
 <body>
-<div id='page-wrapper'>
-    <!-- Top Bar -->
-    <div class='top-bar'>
-        <div class='container'>
-            <span id='current-date'></span>
-            <b:section id='topbar-links' class='topbar-links' maxwidgets='1' showaddelement='yes'/>
-            <div class='top-bar-right' style='display: flex; align-items: center; gap: 15px;'>
-                 <b:section id='topbar-social' class='topbar-social' maxwidgets='1' showaddelement='yes'/>
-                 <button aria-label='Toggle Dark Mode' class='theme-toggle' id='theme-toggle'>
-                    <svg viewBox='0 0 24 24' width='18' height='18' xmlns='http://www.w3.org/2000/svg'><path d='M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.106a.75.75 0 010 1.06-4.5 4.5 0 00-6.364 6.364.75.75 0 01-1.06 1.06 6 6 0 018.486-8.486.75.75 0 011.06 0z'/></svg>
-                 </button>
-            </div>
-        </div>
-    </div>
 
-    <!-- Header -->
-    <header class='main-header'>
-        <div class='container'>
-            <b:section id='header' class='header-section' maxwidgets='1' showaddelement='yes'>
-                <b:widget id='Header1' type='Header' locked='true'>
-                    <b:includable id='main'>
-                        <div class='site-title'>
-                        <b:if cond='data:widgets.Header1.data.logoUrl'>
-                            <a expr:href='data:blog.homepageUrl'><img expr:alt='data:blog.title' expr:src='data:widgets.Header1.data.logoUrl' expr:height='data:widgets.Header1.data.logoHeight' expr:width='data:widgets.Header1.data.logoWidth'/></a>
-                        <b:else/>
-                            <a expr:href='data:blog.homepageUrl'><data:blog.title/></a>
-                        </b:if>
-                        </div>
-                    </b:includable>
-                </b:widget>
-            </b:section>
-             <b:section id='header-search' class='header-search-section' maxwidgets='1' showaddelement='yes'>
-                <b:widget id='BlogSearch1' type='BlogSearch'/>
-             </b:section>
-             <b:section id='header-ad' class='header-ad-section' maxwidgets='1' showaddelement='yes'/>
-        </div>
+    <header class='header-container'>
+        <b:section id='header' class='header' maxwidgets='1' showaddelement='yes'>
+            <b:widget id='Header1' type='Header' locked='true'>
+              <b:includable id='main'>
+                <b:if cond='data:blog.url == data:blog.homepageUrl'>
+                  <h1 class='title'><data:blog.title/></h1>
+                <b:else/>
+                  <p class='title'><a expr:href='data:blog.homepageUrl'><data:blog.title/></a></p>
+                </b:if>
+              </b:includable>
+            </b:widget>
+        </b:section>
     </header>
 
-    <!-- Main Navigation -->
-    <nav class='main-nav' id='main-nav'>
-        <div class='container'>
-            <button class='menu-toggle' id='menu-toggle' aria-expanded='false' aria-controls='main-nav-list'>&#9776;</button>
-            <b:section id='main-nav-links' class='main-nav-section' maxwidgets='1' showaddelement='yes'>
-                <b:widget id='LinkList1' type='LinkList' title='Main Menu'>
-                     <b:includable id='main'>
-                        <ul class='main-nav-list' id='main-nav-list'>
-                            <b:loop values='data:links' var='link'>
-                                <li><a expr:href='data:link.href'><data:link.name/></a></li>
-                            </b:loop>
-                        </ul>
-                    </b:includable>
-                </b:widget>
-            </b:section>
-        </div>
-    </nav>
-
-    <!-- Breaking News Ticker -->
-    <div class='container'>
-        <b:section id='news-ticker' class='news-ticker-section' maxwidgets='1' showaddelement='yes'/>
-    </div>
-
-    <div class='container main-wrapper'>
-        <main class='content-area'>
-            <b:if cond='data:blog.pageType == "index"'>
-                <b:section id='featured-posts' class='featured-posts-section' maxwidgets='1' showaddelement='yes'>
-                    <b:widget id='FeaturedPost1' type='FeaturedPost' title='Featured Post'/>
-                </b:section>
-            </b:if>
-
-            <b:section id='main' class='main-section' maxwidgets='1' showaddelement='yes'>
-                <b:widget id='Blog1' type='Blog' locked='true'>
-                    <b:includable id='main'>
-                         <b:if cond='!data:posts or data:posts.empty'>
-                            <p>لا توجد مقالات لعرضها.</p>
-                        <b:else/>
-                            <div class='post-grid'>
-                                <b:loop values='data:posts' var='post'>
-                                    <b:if cond='data:blog.pageType == &quot;item&quot;'>
-                                        <b:include data='post' name='postFull'/>
-                                    <b:else/>
-                                        <b:include data='post' name='postCard'/>
-                                    </b:if>
-                                </b:loop>
-                            </div>
-                        </b:if>
-                        <b:include name='nextprev'/>
-                    </b:includable>
-
-                    <b:includable id='postCard' var='post'>
-                        <article class='post-card'>
-                            <a expr:href='data:post.url' class='post-card-thumbnail'>
-                                <b:if cond='data:post.firstImageUrl'>
-                                     <img expr:src='resizeImage(data:post.firstImageUrl, 720, "16:9")' loading='lazy' expr:alt='data:post.title'/>
-                                <b:else/>
-                                    <img src='https://via.placeholder.com/720x405.webp?text=No+Image' expr:alt='data:post.title'/>
-                                </b:if>
-                                <b:if cond='data:post.labels'>
-                                    <span class='post-card-category'><data:post.labels.first.name/></span>
-                                </b:if>
-                            </a>
-                            <div class='post-card-content'>
-                                <h3 class='post-card-title'><a expr:href='data:post.url'><data:post.title/></a></h3>
-                                <div class='post-card-snippet'><b:eval expr='snippet(data:post.body, {length: 150, links: false})'/>...</div>
-                                <div class='post-meta'>
-                                    <span><data:post.author/></span> &#8226; <span><data:post.timestamp/></span>
-                                </div>
-                            </div>
-                        </article>
-                    </b:includable>
-
-                    <b:includable id='postFull' var='post'>
-                        <article class='post-full'>
-                             <b:include data='post' name='breadcrumb'/>
-                            <h1 class='post-full-title'><data:post.title/></h1>
-                            <div class='post-full-meta'>
-                                <span>الكاتب: <a expr:href='data:post.authorProfileUrl' rel='author'><data:post.author/></a></span>
-                                <span>التاريخ: <time expr:datetime='data:post.timestampISO8601'><data:post.timestamp/></time></span>
-                                <b:if cond='data:post.labels'><span>الفئة: <a expr:href='data:post.labels.first.url'><data:post.labels.first.name/></a></span></b:if>
-                                <span id='reading-time'></span>
-                            </div>
-                            <div class='post-full-body' id='post-body'>
-                                <data:post.body/>
-                            </div>
-                             <b:include data='post' name='shareButtons'/>
-                             <b:include data='post' name='relatedPosts'/>
-                             <b:include data='post' name='authorBox'/>
-                             <b:include data='post' name='comments'/>
-                        </article>
-                    </b:includable>
-
-                    <b:includable id='breadcrumb' var='post'>
-                        <nav aria-label='Breadcrumb' class='breadcrumb'>
-                           <a expr:href='data:blog.homepageUrl'>الرئيسية</a> &gt;
-                           <b:if cond='data:post.labels'><a expr:href='data:post.labels.first.url'><data:post.labels.first.name/></a> &gt;</b:if>
-                           <span><b:eval expr='data:post.title ? data:post.title : data:blog.pageName'/></span>
-                        </nav>
-                    </b:includable>
-
-                    <b:includable id='relatedPosts' var='post'>
-                        <b:if cond='data:post.labels'>
-                        <div class='related-posts'>
-                            <h3>مقالات ذات صلة</h3>
-                            <div id='related-posts-container'></div>
-                            <script>
-                                const relatedLabel = "<b:eval expr='data:post.labels.first.name'/>";
-                                const currentPostUrl = "<data:post.url/>";
-                            </script>
+    <div class='main-container'>
+        <b:section id='main' class='main' maxwidgets='1' showaddelement='yes'>
+            <b:widget id='Blog1' type='Blog' locked='true'>
+                <b:includable id='main'>
+                    <b:loop values='data:posts' var='post'>
+                        <div class='post'>
+                            <h2><a expr:href='data:post.url'><data:post.title/></a></h2>
+                            <p><data:post.body/></p>
                         </div>
-                        </b:if>
-                    </b:includable>
-
-                    <b:includable id='authorBox' var='post'>
-                       <!-- Author Box Widget can be placed here via Layout -->
-                    </b:includable>
-
-                    <b:includable id='shareButtons' var='post'>
-                        <!-- Share buttons can be a separate HTML widget for easier management -->
-                    </b:includable>
-
-                    <b:includable id='nextprev'>
-                      <nav class='blog-pager' id='blog-pager'>
-                        <b:if cond='data:olderPageUrl'><a class='older-link' expr:href='data:olderPageUrl' rel='next'><data:messages.olderPosts/></a></b:if>
-                        <b:if cond='data:newerPageUrl'><a class='newer-link' expr:href='data:newerPageUrl' rel='prev'><data:messages.newerPosts/></a></b:if>
-                      </nav>
-                    </b:includable>
-
-                    <b:includable id='comments' var='post'><div class='comments' id='comments'><b:include data='post' name='comment-picker'/></div></b:includable>
-                </b:widget>
-            </b:section>
-        </main>
-        <aside class='sidebar-area'>
-            <b:section id='sidebar' class='sidebar-section' maxwidgets='8' showaddelement='yes'>
-                <b:widget id='PopularPosts1' type='PopularPosts'/>
-                <b:widget id='Label1' type='Label'/>
-                <b:widget id='FollowByEmail1' type='FollowByEmail'/>
-                <b:widget id='HTML2' type='HTML' title='Ad Space'/>
-            </b:section>
-        </aside>
+                    </b:loop>
+                </b:includable>
+            </b:widget>
+        </b:section>
     </div>
 
-    <footer class='main-footer'>
-        <div class='container'>
-            <b:section id='footer' class='footer-section' maxwidgets='3' showaddelement='yes'/>
-            <p>جميع الحقوق محفوظة &#169; <script>document.write(new Date().getFullYear())</script> - <data:blog.title/></p>
-        </div>
+    <footer class='footer-container'>
+         <p>Copyright &#169; <data:blog.title/></p>
     </footer>
-</div>
-
-<!-- All Scripts Deferred -->
-<script defer='defer'>
-//<![CDATA[
-function Alwatan24Theme() {
-    // Dark Mode
-    const themeToggle = document.getElementById('theme-toggle');
-    const htmlEl = document.documentElement;
-    const currentTheme = localStorage.getItem('theme');
-    if (currentTheme) htmlEl.classList.add(currentTheme);
-    themeToggle.addEventListener('click', () => {
-        htmlEl.classList.toggle('theme-dark');
-        localStorage.setItem('theme', htmlEl.classList.contains('theme-dark') ? 'theme-dark' : '');
-    });
-
-    // Mobile Menu
-    const menuToggle = document.getElementById('menu-toggle');
-    const navList = document.getElementById('main-nav-list');
-    menuToggle.addEventListener('click', () => {
-        const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
-        menuToggle.setAttribute('aria-expanded', !isExpanded);
-        navList.classList.toggle('active');
-    });
-
-    // Current Date
-    try {
-        document.getElementById('current-date').textContent = new Date().toLocaleDateString('ar-EG', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-    } catch(e) {}
-
-    // Reading Time
-    const postBody = document.getElementById('post-body');
-    if (postBody) {
-        const text = postBody.innerText;
-        const wpm = 200;
-        const words = text.trim().split(/\s+/).length;
-        const time = Math.ceil(words / wpm);
-        document.getElementById('reading-time').innerText = `مدة القراءة: ${time} دقائق`;
-    }
-
-    // Breaking News Ticker
-    async function fetchBreakingNews() {
-        const tickerWidget = document.querySelector('#news-ticker .widget-content');
-        if (!tickerWidget) return;
-        try {
-            const res = await fetch('/feeds/posts/default/-/عاجل?alt=json&amp;max-results=7');
-            const data = await res.json();
-            const entries = data.feed.entry || [];
-            if (entries.length > 0) {
-                const ul = document.createElement('ul');
-                entries.forEach(post => {
-                    const li = document.createElement('li');
-                    const a = document.createElement('a');
-                    a.href = post.link.find(l => l.rel === 'alternate').href;
-                    a.textContent = post.title.$t;
-                    li.appendChild(a);
-                    ul.appendChild(li);
-                });
-                ul.innerHTML += ul.innerHTML; // Duplicate for smooth scroll
-                const tickerContent = document.createElement('div');
-                tickerContent.className = 'ticker-content';
-                tickerContent.appendChild(ul);
-
-                const title = document.createElement('div');
-                title.className = 'ticker-title';
-                title.textContent = "عاجل";
-
-                const tickerContainer = document.createElement('div');
-                tickerContainer.className = 'news-ticker';
-                tickerContainer.appendChild(title);
-                tickerContainer.appendChild(tickerContent);
-
-                tickerWidget.innerHTML = '';
-                tickerWidget.appendChild(tickerContainer);
-
-            }
-        } catch (error) { console.error("Failed to load breaking news:", error); }
-    }
-    fetchBreakingNews();
-
-    // Related Posts
-    async function fetchRelatedPosts() {
-        if (typeof relatedLabel === 'undefined') return;
-        const container = document.getElementById('related-posts-container');
-        if(!container) return;
-        try {
-            const res = await fetch('/feeds/posts/default/-/' + relatedLabel + '?alt=json&amp;max-results=5');
-            const data = await res.json();
-            const entries = data.feed.entry || [];
-            let html = '';
-            entries.forEach(post => {
-                const postUrl = post.link.find(l => l.rel === 'alternate').href;
-                if (postUrl === currentPostUrl) return; // Skip current post
-                const title = post.title.$t;
-                const thumb = post.media$thumbnail ? post.media$thumbnail.url.replace('/s72-c/', '/s400-c/') : 'https://via.placeholder.com/400x225.webp?text=No+Image';
-                html += `<article class="post-card">
-                           <a href="${postUrl}" class="post-card-thumbnail"><img src="${thumb}" loading="lazy" alt="${title}"/></a>
-                           <div class="post-card-content"><h4 class="post-card-title"><a href="${postUrl}">${title}</a></h4></div>
-                         </article>`;
-            });
-            container.innerHTML = html;
-        } catch (error) { console.error("Failed to load related posts:", error); }
-    }
-    if (document.getElementById('related-posts-container')) {
-        fetchRelatedPosts();
-    }
-}
-document.addEventListener('DOMContentLoaded', Alwatan24Theme);
-//]]>
-</script>
-
-<!-- SEO META INCLUDABLE -->
-<b:includable id='seo-meta-tags'>
-    <title><data:blog.pageTitle/></title>
-    <b:if cond='data:blog.metaDescription and data:blog.metaDescription != &quot;&quot;'>
-        <meta expr:content='data:blog.metaDescription' name='description'/>
-    </b:if>
-    <meta expr:content='data:blog.url.canonical' property='og:url'/>
-    <meta content='الوطن 24' property='og:site_name'/>
-    <b:if cond='data:blog.pageType == &quot;item&quot;'>
-        <meta expr:content='data:blog.pageName' property='og:title'/>
-        <meta content='article' property='og:type'/>
-        <b:if cond='data:blog.postImageUrl'>
-            <meta expr:content='data:blog.postImageUrl' property='og:image'/>
-        </b:if>
-    <b:else/>
-        <meta expr:content='data:blog.title' property='og:title'/>
-        <meta content='website' property='og:type'/>
-    </b:if>
-    <b:if cond='data:blog.metaDescription and data:blog.metaDescription != &quot;&quot;'>
-        <meta expr:content='data:blog.metaDescription' property='og:description'/>
-    </b:if>
-    <meta content='summary_large_image' name='twitter:card'/>
-</b:includable>
-
-<!-- JSON-LD SCHEMA INCLUDABLE -->
-<b:includable id='json-ld-schema'>
-    <script type='application/ld+json'>
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "url": "<data:blog.homepageUrl/>",
-      "name": "<data:blog.title/>",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "<data:blog.homepageUrl/>search?q={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
-    }
-    </script>
-    <b:if cond='data:blog.pageType == &quot;item&quot;'>
-    <script type='application/ld+json'>
-    {
-      "@context": "https://schema.org",
-      "@type": "NewsArticle",
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "<data:blog.url/>"
-      },
-      "headline": "<data:blog.pageName/>",
-      "image": [
-        <b:if cond='data:blog.postImageUrl'>
-        "<data:blog.postImageUrl/>"
-        </b:if>
-       ],
-      "datePublished": "<data:blog.timestampISO8601/>",
-      "dateModified": "<data:blog.lastUpdatedISO8601/>",
-      "author": {
-        "@type": "Person",
-        "name": "<data:blog.author/>",
-        "url": "<data:blog.authorProfileUrl/>"
-      },
-       "publisher": {
-        "@type": "Organization",
-        "name": "الوطن 24",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "URL_TO_YOUR_LOGO_600x60.png"
-        }
-      },
-      "description": "<data:blog.metaDescription/>"
-    }
-    </script>
-    </b:if>
-</b:includable>
 
 </body>
 </html>
