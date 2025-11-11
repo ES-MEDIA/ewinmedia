@@ -462,19 +462,24 @@ document.addEventListener('DOMContentLoaded', Alwatan24Theme);
 <!-- SEO META INCLUDABLE -->
 <b:includable id='seo-meta-tags'>
     <title><data:blog.pageTitle/></title>
-    <meta expr:content='data:blog.metaDescription' name='description'/>
-    <b:if cond='data:blog.pageType == "item"'>
+    <b:if cond='data:blog.metaDescription and data:blog.metaDescription != &quot;&quot;'>
+        <meta expr:content='data:blog.metaDescription' name='description'/>
+    </b:if>
+    <meta expr:content='data:blog.url.canonical' property='og:url'/>
+    <meta content='الوطن 24' property='og:site_name'/>
+    <b:if cond='data:blog.pageType == &quot;item&quot;'>
         <meta expr:content='data:blog.pageName' property='og:title'/>
-        <meta expr:content='data:blog.metaDescription' property='og:description'/>
         <meta content='article' property='og:type'/>
-        <meta expr:content='data:blog.url' property='og:url'/>
-        <b:if cond='data:blog.postImageUrl'><meta expr:content='data:blog.postImageUrl' property='og:image'/></b:if>
+        <b:if cond='data:blog.postImageUrl'>
+            <meta expr:content='data:blog.postImageUrl' property='og:image'/>
+        </b:if>
     <b:else/>
         <meta expr:content='data:blog.title' property='og:title'/>
-        <meta expr:content='data:blog.metaDescription' property='og:description'/>
         <meta content='website' property='og:type'/>
     </b:if>
-    <meta content='الوطن 24' property='og:site_name'/>
+    <b:if cond='data:blog.metaDescription and data:blog.metaDescription != &quot;&quot;'>
+        <meta expr:content='data:blog.metaDescription' property='og:description'/>
+    </b:if>
     <meta content='summary_large_image' name='twitter:card'/>
 </b:includable>
 
