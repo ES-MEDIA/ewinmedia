@@ -1,70 +1,188 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!-- AlWatan 24 - Guaranteed Safe Base Theme -->
+<!--
+AlWatan 24 – Blogger News Theme (RTL) - Final Stable Version 2.0
+-->
 <!DOCTYPE html>
 <html b:css='true' b:defaultwidgetversion='2' b:layoutsVersion='3' b:responsive='true' expr:dir='data:blog.languageDirection' lang='ar'>
 <head>
-    <meta content='width=device-width, initial-scale=1.0' name='viewport'/>
+    <meta content='width=device-width, initial-scale=1, shrink-to-fit=no' name='viewport'/>
+    <link href='https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&amp;display=swap' rel='stylesheet'/>
+
+    <!-- Start: Safe SEO & Meta Tags -->
     <title><data:blog.pageTitle/></title>
+    <b:if cond='data:blog.metaDescription and data:blog.metaDescription != ""'>
+      <meta expr:content='data:blog.metaDescription' name='description'/>
+    </b:if>
+    <b:if cond='data:blog.url and data:blog.url.canonical'>
+      <link expr:href='data:blog.url.canonical' rel='canonical'/>
+      <meta expr:content='data:blog.url.canonical' property='og:url'/>
+    </b:if>
+    <meta content='الوطن 24' property='og:site_name'/>
+    <b:if cond='data:blog.pageType == "item"'>
+      <meta expr:content='data:blog.pageName' property='og:title'/>
+      <meta content='article' property='og:type'/>
+      <b:if cond='data:blog.postImageUrl'>
+        <meta expr:content='data:blog.postImageUrl' property='og:image'/>
+      </b:if>
+    <b:else/>
+      <meta expr:content='data:blog.pageTitle' property='og:title'/>
+      <meta content='website' property='og:type'/>
+    </b:if>
+    <b:if cond='data:blog.metaDescription and data:blog.metaDescription != ""'>
+      <meta expr:content='data:blog.metaDescription' property='og:description'/>
+    </b:if>
+    <meta content='summary_large_image' name='twitter:card'/>
+    <!-- End: Safe SEO & Meta Tags -->
+
     <b:include data='blog' name='all-head-content'/>
+
     <b:skin><![CDATA[
-      body {
-        font-family: sans-serif;
-        background-color: #f0f0f0;
-        color: #333;
-        margin: 0;
+      /*<Variable name="font.family" description="Font Family" type="font" default="Tajawal, sans-serif"/>*/
+      /*<Variable name="color.primary" description="Primary Color" type="color" default="#0D47A1"/>*/
+      /*<Variable name="color.secondary" description="Secondary Color" type="color" default="#EF6C00"/>*/
+      /*<Variable name="color.bg.light" description="Background (Light)" type="color" default="#FFFFFF"/>*/
+      /*<Variable name="color.bg.dark" description="Background (Dark)" type="color" default="#0B0F19"/>*/
+      /*<Variable name="color.text.light" description="Text (Light)" type="color" default="#111111"/>*/
+      /*<Variable name="color.text.dark" description="Text (Dark)" type="color" default="#E8EAF6"/>*/
+
+      :root {
+        --font-family: $(font.family);
+        --color-primary: $(color.primary);
+        --color-secondary: $(color.secondary);
+        --color-bg: $(color.bg.light);
+        --color-text: $(color.text.light);
+        --color-border: #e0e0e0;
+        --card-bg: #fff;
       }
-      .header-container, .footer-container {
-        background-color: #fff;
-        padding: 20px;
-        text-align: center;
-        border-bottom: 1px solid #ddd;
+      html.theme-dark {
+        --color-bg: $(color.bg.dark);
+        --color-text: $(color.text.dark);
+        --color-border: #2a2a2a;
+        --card-bg: #1f2937;
       }
-      .main-container {
-        max-width: 1100px;
-        margin: 20px auto;
-        padding: 20px;
-        background-color: #fff;
-      }
-       h1.title {
-        font-size: 2em;
-        color: #111;
-      }
+      body { font-family: var(--font-family); background-color: var(--color-bg); color: var(--color-text); margin: 0; line-height: 1.7; font-size: 16px; transition: background-color .2s; }
+      a { color: var(--color-primary); text-decoration: none; }
+      img { max-width: 100%; height: auto; }
+      .container { max-width: 1200px; margin: 0 auto; padding: 0 15px; }
+      .header-container { background-color: var(--card-bg); padding: 15px 0; border-bottom: 1px solid var(--color-border); }
+      .header-container .container { display: flex; justify-content: space-between; align-items: center; }
+      .main-container { display: flex; flex-wrap: wrap; gap: 20px; padding: 20px 0; }
+      .content-area { flex: 1 1 70%; min-width: 0; }
+      .sidebar-area { flex: 1 1 25%; min-width: 0; }
+      .post-card { background-color: var(--card-bg); border: 1px solid var(--color-border); margin-bottom: 20px; border-radius: 5px; overflow: hidden; }
+      .post-card img { width: 100%; display: block; }
+      .post-card-content { padding: 20px; }
+      .post-card-title a { font-size: 1.6em; color: var(--color-text); font-weight: bold; text-decoration: none; }
+      .footer-container { background-color: var(--card-bg); padding: 20px; text-align: center; border-top: 1px solid var(--color-border); margin-top: 20px; }
+      .theme-toggle { cursor: pointer; padding: 8px 12px; border: 1px solid var(--color-border); border-radius: 5px; background-color: var(--card-bg); color: var(--color-text); }
+      .news-ticker { display: flex; background-color: var(--card-bg); border: 1px solid var(--color-border); margin: 15px 0; overflow: hidden; }
+      .ticker-title { background-color: var(--color-secondary); color: #fff; padding: 10px 15px; font-weight: bold; white-space: nowrap; }
+      .ticker-content { overflow: hidden; position: relative; flex-grow: 1; }
+      .ticker-content ul { list-style: none; padding: 0; margin: 0; display: flex; position: absolute; white-space: nowrap; animation: ticker-scroll 40s linear infinite; }
+      .ticker-content ul:hover { animation-play-state: paused; }
+      .ticker-content ul li a { display: block; padding: 10px 15px; color: var(--color-text); }
+      @keyframes ticker-scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
     ]]></b:skin>
 </head>
 <body>
 
     <header class='header-container'>
-        <b:section id='header' class='header' maxwidgets='1' showaddelement='yes'>
-            <b:widget id='Header1' type='Header' locked='true'>
-              <b:includable id='main'>
-                <b:if cond='data:blog.url == data:blog.homepageUrl'>
-                  <h1 class='title'><data:blog.title/></h1>
-                <b:else/>
-                  <p class='title'><a expr:href='data:blog.homepageUrl'><data:blog.title/></a></p>
-                </b:if>
-              </b:includable>
-            </b:widget>
-        </b:section>
+        <div class='container'>
+            <b:section id='header' class='header' maxwidgets='1' showaddelement='yes'>
+                <b:widget id='Header1' type='Header' locked='true'/>
+            </b:section>
+             <button class='theme-toggle' id='theme-toggle'>تبديل الوضع</button>
+        </div>
     </header>
 
-    <div class='main-container'>
-        <b:section id='main' class='main' maxwidgets='1' showaddelement='yes'>
-            <b:widget id='Blog1' type='Blog' locked='true'>
-                <b:includable id='main'>
-                    <b:loop values='data:posts' var='post'>
-                        <div class='post'>
-                            <h2><a expr:href='data:post.url'><data:post.title/></a></h2>
-                            <p><data:post.body/></p>
-                        </div>
-                    </b:loop>
-                </b:includable>
-            </b:widget>
-        </b:section>
+    <div class='container'>
+        <b:section id='news-ticker' class='news-ticker-section' maxwidgets='1' showaddelement='yes'/>
+    </div>
+
+    <div class='container main-container'>
+        <main class='content-area'>
+            <b:section id='main' class='main' maxwidgets='1' showaddelement='yes'>
+                <b:widget id='Blog1' type='Blog' locked='true'>
+                    <b:includable id='main'>
+                        <b:loop values='data:posts' var='post'>
+                            <div class='post-card'>
+                                <b:if cond='data:post.firstImageUrl'>
+                                    <a expr:href='data:post.url'><img expr:src='resizeImage(data:post.firstImageUrl, 720, "16:9")' expr:alt='data:post.title'/></a>
+                                </b:if>
+                                <div class='post-card-content'>
+                                    <h2 class='post-card-title'><a expr:href='data:post.url'><data:post.title/></a></h2>
+                                    <p><b:eval expr='snippet(data:post.body, {length: 150, links: false})'/></p>
+                                </div>
+                            </div>
+                        </b:loop>
+                    </b:includable>
+                </b:widget>
+            </b:section>
+        </main>
+        <aside class='sidebar-area'>
+            <b:section id='sidebar' class='sidebar' maxwidgets='5' showaddelement='yes'>
+                <b:widget id='Label1' type='Label'/>
+                 <b:widget id='PopularPosts1' type='PopularPosts'/>
+            </b:section>
+        </aside>
     </div>
 
     <footer class='footer-container'>
-         <p>Copyright &#169; <data:blog.title/></p>
+         <p>جميع الحقوق محفوظة &#169; <script>document.write(new Date().getFullYear())</script> - <data:blog.title/></p>
     </footer>
+
+<script>
+//<![CDATA[
+document.addEventListener('DOMContentLoaded', function() {
+    // Dark Mode Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    if(themeToggle) {
+        const htmlEl = document.documentElement;
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme) {
+            htmlEl.classList.add(currentTheme);
+        }
+        themeToggle.addEventListener('click', () => {
+            htmlEl.classList.toggle('theme-dark');
+            let theme = '';
+            if (htmlEl.classList.contains('theme-dark')) {
+                theme = 'theme-dark';
+            }
+            localStorage.setItem('theme', theme);
+        });
+    }
+
+    // Breaking News Ticker
+    const tickerSection = document.getElementById('news-ticker');
+    if (tickerSection) {
+        fetch('/feeds/posts/default/-/عاجل?alt=json&amp;max-results=7')
+            .then(response => response.json())
+            .then(data => {
+                const entries = data.feed.entry || [];
+                if (entries.length > 0) {
+                    let listItems = '';
+                    entries.forEach(post => {
+                        const postUrl = post.link.find(l => l.rel === 'alternate').href;
+                        const postTitle = post.title.$t;
+                        listItems += `<li><a href="${postUrl}">${postTitle}</a></li>`;
+                    });
+
+                    const tickerHTML = `
+                        <div class="news-ticker">
+                            <div class="ticker-title">عاجل</div>
+                            <div class="ticker-content">
+                                <ul>${listItems}</ul>
+                            </div>
+                        </div>
+                    `;
+                    tickerSection.innerHTML = tickerHTML;
+                }
+            })
+            .catch(error => console.error("Error fetching breaking news:", error));
+    }
+});
+//]]>
+</script>
 
 </body>
 </html>
