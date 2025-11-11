@@ -1,125 +1,101 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!-- AlWatan 24 – Final & Definitive Working Version -->
+<!-- AlWatan 24 - The Final, Simplest, Working Theme -->
 <!DOCTYPE html>
 <html b:css='true' b:defaultwidgetversion='2' b:layoutsVersion='3' b:responsive='true' expr:dir='data:blog.languageDirection' lang='ar'>
 <head>
-    <meta content='width=device-width, initial-scale=1, shrink-to-fit=no' name='viewport'/>
-    <link href='https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&amp;display=swap' rel='stylesheet'/>
-
-    <!-- Final Safe SEO Meta Tags -->
+    <meta content='width=device-width, initial-scale=1.0' name='viewport'/>
     <title><data:blog.pageTitle/></title>
-    <b:if cond='data:blog.metaDescription and data:blog.metaDescription != ""'>
-      <meta expr:content='data:blog.metaDescription' name='description'/>
-    </b:if>
-    <b:if cond='data:blog.url and data:blog.url.canonical'>
-      <link expr:href='data:blog.url.canonical' rel='canonical'/>
-    </b:if>
-
     <b:include data='blog' name='all-head-content'/>
-
     <b:skin><![CDATA[
-      /*<Variable name="color.primary" description="Primary Color" type="color" default="#0D47A1"/>*/
-      /*<Variable name="color.secondary" description="Secondary Color" type="color" default="#EF6C00"/>*/
-      /*<Variable name="color.bg.light" description="Background (Light)" type="color" default="#F5F5F5"/>*/
-      /*<Variable name="color.bg.dark" description="Background (Dark)" type="color" default="#121212"/>*/
-      /*<Variable name="color.text.light" description="Text (Light)" type="color" default="#111111"/>*/
-      /*<Variable name="color.text.dark" description="Text (Dark)" type="color" default="#EAEAEA"/>*/
-      /*<Variable name="card.bg.light" description="Card BG (Light)" type="color" default="#FFFFFF"/>*/
-      /*<Variable name="card.bg.dark" description="Card BG (Dark)" type="color" default="#1E1E1E"/>*/
-
-      :root {
-        --color-primary: $(color.primary);
-        --color-secondary: $(color.secondary);
-        --color-bg: $(color.bg.light);
-        --color-text: $(color.text.light);
-        --card-bg: $(card.bg.light);
-        --color-border: #e0e0e0;
+      body {
+        direction: rtl;
+        text-align: right;
+        font-family: Arial, sans-serif;
+        background: #f0f0f0;
+        color: #000;
+        margin: 0;
+        padding: 20px;
       }
-      html.theme-dark {
-        --color-bg: $(color.bg.dark);
-        --color-text: $(color.text.dark);
-        --card-bg: $(card.bg.dark);
-        --color-border: #333;
+      #page-wrapper {
+        background: #fff;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
       }
-      body { font-family: 'Tajawal', sans-serif; background-color: var(--color-bg); color: var(--color-text); margin: 0; line-height: 1.7; font-size: 16px; direction: rtl; }
-      .header-container, .footer-container { background-color: var(--card-bg); border-bottom: 1px solid var(--color-border); padding: 15px; }
-      .footer-container { border-bottom: 0; border-top: 1px solid var(--color-border); margin-top: 20px; text-align: center; }
-      .header-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-      .main-container { max-width: 1200px; margin: 20px auto; display: flex; flex-wrap: wrap; gap: 20px; }
-      .content-area { flex: 1 1 70%; min-width: 0; }
-      .sidebar-area { flex: 1 1 25%; min-width: 0; }
-      .post { background-color: var(--card-bg); border: 1px solid var(--color-border); margin-bottom: 20px; border-radius: 5px; overflow: hidden; }
-      .post-content { padding: 25px; }
-      .post-title a { font-size: 1.8em; color: var(--color-text); font-weight: bold; text-decoration: none; }
-      .post-body { margin-top: 15px; }
-      .no-posts-message { background-color: var(--card-bg); border: 1px solid var(--color-border); border-radius: 5px; padding: 40px; text-align: center; }
-      .theme-toggle { cursor: pointer; padding: 8px 12px; border: 1px solid var(--color-border); border-radius: 5px; }
+      .header-section {
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #000;
+        text-align: center;
+      }
+      .post {
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #eee;
+      }
+      .post-title a {
+        font-size: 24px;
+        color: #0D47A1;
+        text-decoration: none;
+      }
+      .no-posts-found {
+        font-size: 18px;
+        font-weight: bold;
+        color: #E53935;
+        text-align: center;
+        padding: 50px;
+      }
+      .footer-section {
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 2px solid #000;
+        text-align: center;
+        font-size: 14px;
+      }
     ]]></b:skin>
 </head>
 <body>
 
-    <header class='header-container'>
-        <div class='header-inner'>
-            <b:section id='header' class='header' maxwidgets='1' showaddelement='yes'>
-                <b:widget id='Header1' type='Header' locked='true'/>
-            </b:section>
-            <button class='theme-toggle' id='theme-toggle'>تبديل الوضع</button>
-        </div>
+<div id='page-wrapper'>
+    <header>
+      <b:section class='header-section' id='header' maxwidgets='1' showaddelement='yes'>
+        <b:widget id='Header1' locked='true' title='Header' type='Header'/>
+      </b:section>
     </header>
 
-    <div class='main-container'>
-        <main class='content-area'>
-            <b:section id='main' class='main' maxwidgets='1' showaddelement='yes'>
-                <b:widget id='Blog1' type='Blog' locked='true'>
-                    <b:includable id='main'>
-                        <b:if cond='data:posts and !data:posts.empty'>
-                            <b:loop values='data:posts' var='post'>
-                                <div class='post'>
-                                    <div class='post-content'>
-                                        <h2 class='post-title'><a expr:href='data:post.url'><data:post.title/></a></h2>
-                                        <div class='post-body'>
-                                            <data:post.body/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </b:loop>
-                        <b:else/>
-                            <div class='no-posts-message'>
-                                <h3>لا توجد تدوينات لعرضها</h3>
-                                <p>يبدو أنك لم تقم بنشر أي تدوينات بعد. قم بإنشاء تدوينة جديدة لعرضها هنا.</p>
-                            </div>
-                        </b:if>
-                    </b:includable>
-                </b:widget>
-            </b:section>
-        </main>
-        <aside class='sidebar-area'>
-            <b:section id='sidebar' class='sidebar' maxwidgets='5' showaddelement='yes'>
-                <b:widget id='Label1' type='Label'/>
-            </b:section>
-        </aside>
-    </div>
+    <main>
+      <b:section class='main-section' id='main' maxwidgets='1' showaddelement='yes'>
+        <b:widget id='Blog1' locked='true' title='Blog Posts' type='Blog'>
+          <b:includable id='main'>
+            <b:if cond='data:posts and !data:posts.empty'>
+              <b:loop values='data:posts' var='post'>
+                <div class='post'>
+                  <h2 class='post-title'>
+                    <a expr:href='data:post.url'><data:post.title/></a>
+                  </h2>
+                </div>
+              </b:loop>
+            <b:else/>
+              <div class='no-posts-found'>
+                لا توجد أي تدوينات لعرضها. القالب يعمل بشكل صحيح.
+              </div>
+            </b:if>
+          </b:includable>
+        </b:widget>
+      </b:section>
+    </main>
 
-    <footer class='footer-container'>
-         <p>جميع الحقوق محفوظة &#169; <script>document.write(new Date().getFullYear())</script> - <data:blog.title/></p>
+    <footer>
+        <b:section class='footer-section' id='footer' maxwidgets='1' showaddelement='yes'>
+            <b:widget id='Text1' locked='false' title='' type='Text'>
+                <b:includable id='main'>
+                    <p>جميع الحقوق محفوظة &#169; <data:blog.title/></p>
+                </b:includable>
+            </b:widget>
+        </b:section>
     </footer>
-
-<script>
-//<![CDATA[
-document.addEventListener('DOMContentLoaded', function() {
-    const themeToggle = document.getElementById('theme-toggle');
-    if(themeToggle) {
-        const htmlEl = document.documentElement;
-        const currentTheme = localStorage.getItem('theme');
-        if (currentTheme) { htmlEl.classList.add(currentTheme); }
-        themeToggle.addEventListener('click', () => {
-            htmlEl.classList.toggle('theme-dark');
-            localStorage.setItem('theme', htmlEl.classList.contains('theme-dark') ? 'theme-dark' : '');
-        });
-    }
-});
-//]]>
-</script>
+</div>
 
 </body>
 </html>
