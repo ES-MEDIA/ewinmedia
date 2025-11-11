@@ -346,7 +346,7 @@ Customization Instructions:
     <footer class='main-footer'>
         <div class='container'>
             <b:section id='footer' class='footer-section' maxwidgets='3' showaddelement='yes'/>
-            <p>جميع الحقوق محفوظة &copy; <script>document.write(new Date().getFullYear())</script> - <data:blog.title/></p>
+            <p>جميع الحقوق محفوظة &#169; <script>document.write(new Date().getFullYear())</script> - <data:blog.title/></p>
         </div>
     </footer>
 </div>
