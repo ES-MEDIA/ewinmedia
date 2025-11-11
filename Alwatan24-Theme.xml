@@ -159,7 +159,6 @@ Customization Instructions:
     }
     ]]></b:skin>
 
-    <!-- Structured Data (JSON-LD) -->
     <b:include name='json-ld-schema'/>
 </head>
 <body>
@@ -394,7 +393,7 @@ function Alwatan24Theme() {
         const tickerWidget = document.querySelector('#news-ticker .widget-content');
         if (!tickerWidget) return;
         try {
-            const res = await fetch(`/feeds/posts/default/-/عاجل?alt=json&max-results=7`);
+            const res = await fetch('/feeds/posts/default/-/عاجل?alt=json&amp;max-results=7');
             const data = await res.json();
             const entries = data.feed.entry || [];
             if (entries.length > 0) {
@@ -435,7 +434,7 @@ function Alwatan24Theme() {
         const container = document.getElementById('related-posts-container');
         if(!container) return;
         try {
-            const res = await fetch(`/feeds/posts/default/-/${relatedLabel}?alt=json&max-results=5`);
+            const res = await fetch('/feeds/posts/default/-/' + relatedLabel + '?alt=json&amp;max-results=5');
             const data = await res.json();
             const entries = data.feed.entry || [];
             let html = '';
@@ -505,7 +504,9 @@ document.addEventListener('DOMContentLoaded', Alwatan24Theme);
       },
       "headline": "<data:blog.pageName/>",
       "image": [
-        <b:if cond='data:blog.postImageUrl'><b:eval expr='&quot;\&quot;&quot; + data:blog.postImageUrl + &quot;\&quot;&quot;'/></b:if>
+        <b:if cond='data:blog.postImageUrl'>
+        "<data:blog.postImageUrl/>"
+        </b:if>
        ],
       "datePublished": "<data:blog.timestampISO8601/>",
       "dateModified": "<data:blog.lastUpdatedISO8601/>",
