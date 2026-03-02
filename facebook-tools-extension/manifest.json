@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "Facebook Chat Tools",
+  "version": "1.0.0",
+  "description": "Delete Facebook conversations in bulk or send a custom message to the open conversation.",
+  "permissions": ["activeTab", "scripting", "tabs"],
+  "host_permissions": [
+    "https://www.facebook.com/*",
+    "https://messenger.com/*",
+    "https://www.messenger.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Facebook Chat Tools"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.facebook.com/*",
+        "https://messenger.com/*",
+        "https://www.messenger.com/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

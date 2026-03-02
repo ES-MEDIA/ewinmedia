@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>أدوات محادثات فيسبوك</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <main class="popup">
+      <h1>أدوات محادثات فيسبوك</h1>
+      <p class="hint">
+        تعمل الإضافة فقط عند فتح فيسبوك/ماسنجر من نفس المتصفح وتسجيل الدخول.
+      </p>
+
+      <section>
+        <h2>إرسال رسالة</h2>
+        <textarea id="message" rows="4" placeholder="اكتب الرسالة هنا..."></textarea>
+        <button id="sendMessage">إرسال إلى المحادثة المفتوحة</button>
+      </section>
+
+      <section>
+        <h2>حذف المحادثات</h2>
+        <button id="deleteChats" class="danger">حذف كل المحادثات (الظاهرة حاليًا)</button>
+        <p class="warning">تحذير: العملية غير قابلة للتراجع.</p>
+      </section>
+
+      <p id="status" class="status" role="status" aria-live="polite"></p>
+    </main>
+
+    <script src="popup.js"></script>
+  </body>
+</html>
